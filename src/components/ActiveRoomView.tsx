@@ -366,50 +366,60 @@ export const ActiveRoomView: React.FC<ActiveRoomViewProps> = ({
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Left: Group Info & Dynamic Member Capacity */}
           <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
-            <button
-              type="button"
-              onClick={() => setIsGroupInfoOpen(true)}
-              className="flex items-center gap-3 text-left hover:opacity-90 transition-opacity cursor-pointer group"
-            >
-              {/* Group Avatar */}
-              <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-emerald-950/40 relative">
-                <Users className="w-5 h-5" />
-                <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0d1524]" />
-              </div>
-
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-extrabold text-sm sm:text-base text-white group-hover:text-emerald-400 transition-colors">
-                    MessyMessage <span className="text-emerald-400 font-mono text-xs font-semibold">#{roomCode}</span>
-                  </span>
-                  {isHost ? (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCapacityError(null);
-                        setCapacitySuccess(null);
-                        setNewCapacity(maxMembers);
-                        setIsCapacityModalOpen(true);
-                      }}
-                      className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-950/90 hover:bg-emerald-900 text-emerald-400 border border-emerald-700/60 flex items-center gap-1 transition-all cursor-pointer shadow-sm hover:scale-105"
-                      title="Host: Click to change room capacity limit"
-                    >
-                      <Crown className="w-2.5 h-2.5 text-amber-400" />
-                      <span>{participants.length}/{maxMembers}</span>
-                      <Sliders className="w-2.5 h-2.5 text-emerald-300 ml-0.5" />
-                    </button>
-                  ) : (
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.2 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/60">
-                      {participants.length}/{maxMembers} Members
-                    </span>
-                  )}
+            <div className="flex items-center gap-2.5 text-left">
+              {/* Group Avatar & Name - Opens Group Info */}
+              <button
+                type="button"
+                onClick={() => setIsGroupInfoOpen(true)}
+                className="flex items-center gap-3 text-left hover:opacity-90 transition-opacity cursor-pointer group"
+                title="Click to view group information"
+              >
+                {/* Group Avatar */}
+                <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-emerald-950/40 relative">
+                  <Users className="w-5 h-5" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0d1524]" />
                 </div>
-                <p className="text-[11px] text-slate-400 flex items-center gap-1.5 truncate max-w-[220px] sm:max-w-xs">
-                  {participants.map((p) => p.name).join(', ')}
-                </p>
-              </div>
-            </button>
+
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-extrabold text-sm sm:text-base text-white group-hover:text-emerald-400 transition-colors">
+                      MessyMessage <span className="text-emerald-400 font-mono text-xs font-semibold">#{roomCode}</span>
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 flex items-center gap-1.5 truncate max-w-[200px] sm:max-w-xs">
+                    {participants.map((p) => p.name).join(', ')}
+                  </p>
+                </div>
+              </button>
+
+              {/* Dynamic Capacity Badge (Sibling, not nested inside the button above) */}
+              {isHost ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCapacityError(null);
+                    setCapacitySuccess(null);
+                    setNewCapacity(maxMembers);
+                    setIsCapacityModalOpen(true);
+                  }}
+                  className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-950/90 hover:bg-emerald-900 text-emerald-400 border border-emerald-700/60 flex items-center gap-1 transition-all cursor-pointer shadow-sm hover:scale-105"
+                  title="Host: Click to change room capacity limit"
+                >
+                  <Crown className="w-2.5 h-2.5 text-amber-400" />
+                  <span>{participants.length}/{maxMembers}</span>
+                  <Sliders className="w-2.5 h-2.5 text-emerald-300 ml-0.5" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setIsGroupInfoOpen(true)}
+                  className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-950 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-800/60 transition-colors cursor-pointer"
+                  title="View group members"
+                >
+                  {participants.length}/{maxMembers} Members
+                </button>
+              )}
+            </div>
 
             {/* Capacity Dots */}
             <div
