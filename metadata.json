@@ -1,0 +1,10 @@
+{
+  "name": "MessyMessage",
+  "description": "MessyMessage is a fast, real-time peer sharing platform. Create or join private group rooms to instantly transfer messages, documents, and data between computers and phones.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
